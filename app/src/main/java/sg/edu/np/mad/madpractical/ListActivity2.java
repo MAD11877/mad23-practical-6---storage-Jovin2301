@@ -31,7 +31,7 @@ public class ListActivity2 extends AppCompatActivity implements selectListener {
 
                 System.out.println("HELLLLLLLLLLLLLOOOOOOOOOOO" + user.description);
                 dbhandler.addUser(user);
-
+                System.out.println("HEAOJOOADONDOANPNP" + dbhandler.rowCount());
 
             }
         }
