@@ -95,6 +95,9 @@ public class MyDBhandler extends SQLiteOpenHelper {
             userDBList.add(user);
         }
 
+        //return userDBList;
+        cursor.close();
+        db.close();
         return userDBList;
     }
 
