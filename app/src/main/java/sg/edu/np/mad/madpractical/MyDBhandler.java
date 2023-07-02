@@ -55,8 +55,8 @@ public class MyDBhandler extends SQLiteOpenHelper {
         db.close();
     }
 
-    public User findUser(String userName){
-        String query = "SELECT * FROM " + TABLE_USERS + " WHERE " + COLUMN_USERNAME + " = \"" + userName + "\"";
+    public User findUser(int id){
+        String query = "SELECT * FROM " + TABLE_USERS + " WHERE " + COLUMN_ID + " = \"" + id + "\"";
         SQLiteDatabase db = this.getWritableDatabase();
 
         Cursor cursor = db.rawQuery(query, null);
@@ -105,5 +105,12 @@ public class MyDBhandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_USERS, null);
         return cursor.getCount();
+    }
+
+    public void updateUser(User user){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.execSQL("UPDATE User SET Followed = \""+ user.followed +"\" " +  "WHERE id = \""+ user.id +"\"");
+        db.close();
     }
 }
