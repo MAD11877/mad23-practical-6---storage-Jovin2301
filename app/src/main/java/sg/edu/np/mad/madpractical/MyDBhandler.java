@@ -13,12 +13,13 @@ import java.util.Random;
 public class MyDBhandler extends SQLiteOpenHelper {
     String title;
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "User.db";
+    private static final String DATABASE_NAME = "User3.db";
     public static final String TABLE_USERS = "users";
+    public static final String COLUMN_USERNAME = "Username";
+    public static final String COLUMN_DESCRIPTION = "Description";
+
     public static final String COLUMN_ID = "ID";
-    public static final String COLUMN_USERNAME = "userName";
-    public static final String COLUMN_DESCRIPTION = "description";
-    public static final String COLUMN_FOLLOWED = "followStatus";
+    public static final String COLUMN_FOLLOWED = "FollowStatus";
 
     public MyDBhandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABASE_NAME, factory, DATABASE_VERSION);
@@ -26,9 +27,9 @@ public class MyDBhandler extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db){
-        String CREATE_USER_TABLE = "CREATE TABLE " + TABLE_USERS + "(" + COLUMN_USERNAME + COLUMN_DESCRIPTION + COLUMN_ID + COLUMN_FOLLOWED + ")";
-        Log.i(title, CREATE_USER_TABLE);
-        db.execSQL(CREATE_USER_TABLE);
+        String CREATE_USERS_TABLE = "CREATE TABLE " + TABLE_USERS + "(" + COLUMN_USERNAME + " TEXT," + COLUMN_DESCRIPTION + " TEXT," + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_FOLLOWED + " BOOLEAN" + ")";
+        Log.i(title, CREATE_USERS_TABLE);
+        db.execSQL(CREATE_USERS_TABLE);
     }
 
 
@@ -79,9 +80,8 @@ public class MyDBhandler extends SQLiteOpenHelper {
 
 
     public ArrayList<User> getUsers(){
-        SQLiteDatabase db = this.getWritableDatabase();
-
         ArrayList<User> userDBList = new ArrayList<User>();
+        SQLiteDatabase db = this.getWritableDatabase();
 
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_USERS, null);
         while (cursor.moveToNext()){
@@ -96,8 +96,7 @@ public class MyDBhandler extends SQLiteOpenHelper {
         }
 
         //return userDBList;
-        cursor.close();
-        db.close();
+
         return userDBList;
     }
 

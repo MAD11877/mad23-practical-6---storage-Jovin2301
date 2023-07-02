@@ -8,6 +8,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -22,17 +23,16 @@ public class ListActivity2 extends AppCompatActivity implements selectListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list2);
         MyDBhandler dbhandler = new MyDBhandler(this, null, null, 1);
-
-        ArrayList<User> userList = new ArrayList<>();
+        //dbhandler.onUpgrade(dbhandler, 1, 2);
+        ArrayList<User> userList = new ArrayList<User>();
 
         if (dbhandler.rowCount() == 0){
             for (int i = 0; i < 20; i++) {
-                User user = createNewUser();
-
-                System.out.println("HELLLLLLLLLLLLLOOOOOOOOOOO" + user.description);
-                dbhandler.addUser(user);
-                System.out.println("HEAOJOOADONDOANPNP" + dbhandler.rowCount());
-
+                //User user = createNewUser();
+                dbhandler.addUser(createNewUser());
+                //Log.i(title, "HELLLLLLLLLLLLLOOOOOOOOOOO" + createNewUser());
+                System.out.println("osnawngewanegpsdnpsaN" +  dbhandler.rowCount());;
+                //count ++;
             }
         }
 
@@ -55,17 +55,19 @@ public class ListActivity2 extends AppCompatActivity implements selectListener {
         startActivity(toCataloguePage);
     }
 
-    private User createNewUser(){
+    public User createNewUser(){
         Random random2 = new Random();
         int randomNameNum = random2.nextInt(999999999);
         int randomDescriptionNum = random2.nextInt(999999999);
         boolean randomFollow = random2.nextBoolean();
 
-        User userNum = new User();
-        userNum.setName("Name " + String.valueOf(randomNameNum));
-        userNum.setId(count);
-        userNum.setFollowed(randomFollow);
-        userNum.setDescription("Description " + String.valueOf(randomDescriptionNum));
+
+        String name = "Name " + String.valueOf(randomNameNum);
+        String desc = "Description " + String.valueOf(randomDescriptionNum);
+        int id = count;
+        Boolean followStatus = randomFollow;
+
+        User userNum = new User(name, desc, id, followStatus);
         //userNum.setImageView(R.drawable.download);
         count++;
         return userNum;
